@@ -12,8 +12,4 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-<<<<<<< HEAD
-=======
-
->>>>>>> a56f19c81f98fd71e638592bd7853bfbcaab880e
 reportWebVitals(console.log);

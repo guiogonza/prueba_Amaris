@@ -11,7 +11,6 @@ const TransactionsList = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [message, setMessage] = useState('');
 
-<<<<<<< HEAD
   const API_URL = process.env.REACT_APP_API_URL; // Usar variable de entorno
 
   useEffect(() => {
@@ -20,13 +19,6 @@ const TransactionsList = () => {
         console.log('API_URL:', API_URL); // Verifica si la URL de la API se carga correctamente
         const response = await axios.get(`${API_URL}/all_transactions`);
         log.debug('Transactions data:', response.data); // Verifica la estructura de los datos aquí
-=======
-  useEffect(() => {
-    const fetchTransactions = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/all_transactions');
-        log.debug('Transactions data:', response.data);  // Verifica la estructura de los datos aquí
->>>>>>> a56f19c81f98fd71e638592bd7853bfbcaab880e
         setTransactions(response.data);
         setFilteredTransactions(response.data);
       } catch (error) {
@@ -35,11 +27,7 @@ const TransactionsList = () => {
     };
 
     fetchTransactions();
-<<<<<<< HEAD
   }, [API_URL]);
-=======
-  }, []);
->>>>>>> a56f19c81f98fd71e638592bd7853bfbcaab880e
 
   const filterTransactions = (clientId) => {
     log.debug('Filtering transactions for Client ID:', clientId);
@@ -60,11 +48,7 @@ const TransactionsList = () => {
 
   const deleteTransaction = async (transactionId) => {
     try {
-<<<<<<< HEAD
       await axios.delete(`${API_URL}/transaction/${transactionId}`);
-=======
-      await axios.delete(`http://localhost:5000/transaction/${transactionId}`);
->>>>>>> a56f19c81f98fd71e638592bd7853bfbcaab880e
       const updatedTransactions = transactions.filter(txn => txn.TransaccionId !== transactionId);
       setTransactions(updatedTransactions);
       setFilteredTransactions(updatedTransactions);
