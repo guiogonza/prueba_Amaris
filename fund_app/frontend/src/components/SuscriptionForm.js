@@ -59,7 +59,7 @@ const SuscriptionForm = () => {
 
   const sendSubscriptionNotification = async (clientId, fundId, amount) => {
     try {
-      await axios.post('http://localhost:5000/notify_subscription', { client_id: clientId, fund_id: fundId, amount });
+      await axios.post(`${API_URL}/notify_subscription`, { client_id: clientId, fund_id: fundId, amount });
     } catch (error) {
       console.error('Error sending notification:', error);
     }
