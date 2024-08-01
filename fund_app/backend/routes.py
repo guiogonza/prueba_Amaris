@@ -36,6 +36,66 @@ def create_routes(app):
         )
         return jsonify({'transaction_id': transaction_id}), 200
 
+    @app.route('/notify_subscription', methods=['POST'])
+    def notify_subscription():
+        data = request.get_json()
+        client_id = data['client_id']
+        fund_id = data['fund_id']
+        amount = data['amount']
+
+        # Obtener detalles del cliente
+        response = clients_table.get_item(Key={'ClienteId': client_id})
+        client = response['Item']
+
+        # Enviar correo electrónico
+        send_email(client['Email'], fund_id, amount)
+
+        # Enviar notificación por WhatsApp
+        send_whatsapp(client['Phone'], fund_id, amount)
+
+        return jsonify({'message': 'Notificaciones enviadas con éxito'}), 200
+
+    def send_email(to_email, fund_id, amount):
+        # Configurar y enviar el correo electrónico utilizando SendGrid u otro servicio de correo
+        sendgrid_api_key = 'YOUR_SENDGRID_API_KEY'
+        email_data = {
+            "personalizations": [{
+                "to": [{"email": to_email}],
+                "subject": "Suscripción a Fondo Exitosa"
+            }],
+            "from": {"email": "tu-email@tudominio.com"},
+            "content": [{
+                "type": "text/plain",
+                "value": f"Te has suscrito exitosamente al fondo {fund_id} con un monto de {amount}."
+            }]
+        }
+        response = requests.post(
+            "https://api.sendgrid.com/v3/mail/send",
+            headers={"Authorization": f"Bearer {sendgrid_api_key}", "Content-Type": "application/json"},
+            json=email_data
+        )
+        if response.status_code != 202:
+            print(f"Error enviando correo: {response.text}")
+
+    def send_whatsapp(to_phone, fund_id, amount):
+        # Configurar y enviar la notificación por WhatsApp utilizando Twilio
+        account_sid = 'YOUR_TWILIO_ACCOUNT_SID'
+        auth_token = 'YOUR_TWILIO_AUTH_TOKEN'
+        from_phone = 'whatsapp:+14155238886'  # Número de WhatsApp de Twilio
+        client = boto3.client("sns")
+        message = f"Te has suscrito exitosamente al fondo {fund_id} con un monto de {amount}."
+
+        client.publish(
+            PhoneNumber=f'whatsapp:+{to_phone}',
+            Message=message,
+            MessageAttributes={
+                'AWS.SNS.SMS.SenderID': {
+                    'DataType': 'String',
+                    'StringValue': 'FundMgmt'
+                }
+            }
+        )
+
     @app.route('/transactions', methods=['GET'])
     def transactions():
         client_id = request.args.get('client_id')
