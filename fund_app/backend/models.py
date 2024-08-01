@@ -5,9 +5,13 @@ clients_table = dynamodb.Table('Clients')
 transactions_table = dynamodb.Table('Transactions')
 funds_table = dynamodb.Table('Funds')
 
-def get_fund_minimum(fund_id):
+def get_fund_details(fund_id):
     response = funds_table.get_item(Key={'Id': int(fund_id)})  # Asegúrate de que 'Id' sea del tipo correcto
     if 'Item' in response:
-        return int(response['Item']['MontoMinimo'])
+        fund = response['Item']
+        return {
+            'MontoMinimo': int(fund['MontoMinimo']),
+            'Nombre': fund['Nombre']
+        }
     else:
         raise ValueError(f'Fund with ID {fund_id} not found')

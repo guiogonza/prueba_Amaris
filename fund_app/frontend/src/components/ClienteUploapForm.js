@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Form, Button, Container } from 'react-bootstrap';
 
+
+const API_URL = process.env.REACT_APP_API_URL; // Usar variable de entorno
+
 const ClientUploadForm = () => {
   const [file, setFile] = useState(null);
 
@@ -14,7 +17,7 @@ const ClientUploadForm = () => {
     formData.append('file', file);
 
     try {
-      await axios.post('http://localhost:5000/upload_clients', formData);
+      await axios.post(`${API_URL}/upload_clients`, formData);
       alert('Clientes cargados con éxito');
     } catch (error) {
       console.error('Error uploading clients:', error);

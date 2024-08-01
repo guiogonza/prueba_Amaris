@@ -1,29 +1,39 @@
 {
-    "name": "fund-management",
+    "name": "frontend",
     "version": "1.0.0",
-    "private": true,
+    "main": "index.js",
+    "scripts": {
+        "start": "webpack serve --mode development --open",
+        "build": "webpack --mode production"
+    },
     "dependencies": {
-        "axios": "^1.7.2",
+        "axios": "^0.24.0",
         "bootstrap": "^5.3.3",
-        "loglevel": "^1.9.1",
+        "dotenv": "^16.4.5",
+        "loglevel": "^1.8.0",
         "react": "^17.0.2",
-        "react-autosuggest": "^10.1.0",
-        "react-bootstrap": "^2.10.4",
+        "react-bootstrap": "^2.0.4",
         "react-dom": "^17.0.2",
-        "react-scripts": "^5.0.1",
         "web-vitals": "^4.2.2"
     },
-    "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject"
-    },
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ]
+    "devDependencies": {
+        "@babel/core": "^7.23.9",
+        "@babel/preset-env": "^7.23.9",
+        "@babel/preset-react": "^7.23.3",
+        "babel-loader": "^8.3.0",
+        "buffer": "^6.0.3",
+        "crypto-browserify": "^3.12.0",
+        "css-loader": "^6.5.1",
+        "dotenv-webpack": "^7.1.1",
+        "html-webpack-plugin": "^5.6.0",
+        "os-browserify": "^0.3.0",
+        "path-browserify": "^1.0.1",
+        "process": "^0.11.10",
+        "stream-browserify": "^3.0.0",
+        "style-loader": "^3.3.1",
+        "webpack": "^5.64.4",
+        "webpack-cli": "^4.9.1",
+        "webpack-dev-server": "^4.7.1"
     },
     "browserslist": {
         "production": [

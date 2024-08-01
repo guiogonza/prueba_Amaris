@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form, Button, Container, Alert } from 'react-bootstrap';
 
+const API_URL = process.env.REACT_APP_API_URL; // Usar variable de entorno
+
 const SuscriptionForm = () => {
   const [clientId, setClientId] = useState('');
   const [fundId, setFundId] = useState('');
@@ -13,7 +15,7 @@ const SuscriptionForm = () => {
   useEffect(() => {
     const fetchClients = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/clients');
+        const response = await axios.get(`${API_URL}/clients`);
         setClients(response.data);
       } catch (error) {
         console.error('Error fetching clients:', error);
@@ -22,7 +24,7 @@ const SuscriptionForm = () => {
 
     const fetchFunds = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/funds');
+        const response = await axios.get(`${API_URL}/funds`);
         setFunds(response.data);
       } catch (error) {
         console.error('Error fetching funds:', error);
@@ -35,7 +37,7 @@ const SuscriptionForm = () => {
 
   const subscribe = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/subscribe', { client_id: clientId, fund_id: fundId, amount });
+      const response = await axios.post(`${API_URL}/subscribe`, { client_id: clientId, fund_id: fundId, amount });
       alert(`Suscripción exitosa: ${response.data.transaction_id}`);
       setMessage('');
 

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Form, Button, Container, Alert } from 'react-bootstrap';
 
+const API_URL = process.env.REACT_APP_API_URL; // Usar variable de entorno
+
 const ClientForm = ({ onClientAdded }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -10,13 +12,14 @@ const ClientForm = ({ onClientAdded }) => {
 
   const addClient = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/client', { name, email, phone });
+      const response = await axios.post(`${API_URL}/clients`, { name, email, phone });
       setMessage('Cliente creado con éxito.');
       onClientAdded(response.data.client_id, name, email, phone);
       setName('');
       setEmail('');
       setPhone('');
     } catch (error) {
+      console.error('Error creando el cliente:', error); // Añadir log para verificar errores
       setMessage('Error creando el cliente.');
     }
   };

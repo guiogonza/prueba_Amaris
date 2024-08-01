@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form, Button, Container } from 'react-bootstrap';
 
+const API_URL = process.env.REACT_APP_API_URL; // Usar variable de entorno
+
 const UnsubscriptionForm = () => {
   const [userId, setUserId] = useState('');
   const [fundId, setFundId] = useState('');
@@ -13,7 +15,7 @@ const UnsubscriptionForm = () => {
   useEffect(() => {
     const fetchClients = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/clients');
+        const response = await axios.get(`${API_URL}/clients`);
         setClients(response.data);
       } catch (error) {
         console.error('Error fetching clients:', error);
@@ -22,7 +24,7 @@ const UnsubscriptionForm = () => {
 
     const fetchFunds = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/funds');
+        const response = await axios.get(`${API_URL}/funds`);
         setFunds(response.data);
       } catch (error) {
         console.error('Error fetching funds:', error);
@@ -31,7 +33,7 @@ const UnsubscriptionForm = () => {
 
     const fetchClientsWithTransactions = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/all_transactions');
+        const response = await axios.get(`${API_URL}/all_transactions`);
         const uniqueClientIds = [...new Set(response.data.map(txn => txn.ClientID))];
         setClientsWithTransactions(uniqueClientIds);
       } catch (error) {
@@ -46,7 +48,8 @@ const UnsubscriptionForm = () => {
 
   const fetchClientFunds = async (clientId) => {
     try {
-      const response = await axios.get(`http://localhost:5000/client_funds?client_id=${clientId}`);
+      const response = await axios.get(`${API_URL}/client_funds?client_id=${clientId}`);
+      //const response = await axios.get(`http://localhost:5000/client_funds?client_id=${clientId}`);
       setClientFunds(response.data);
     } catch (error) {
       console.error('Error fetching client funds:', error);
@@ -61,7 +64,7 @@ const UnsubscriptionForm = () => {
 
   const unsubscribe = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/unsubscribe', { client_id: userId, fund_id: fundId });
+      const response = await axios.post(`${API_URL}//unsubscribe`, { client_id: userId, fund_id: fundId });
       alert(`Cancelación exitosa: ${response.data.transaction_id}`);
       setClientFunds(clientFunds.filter(fund => fund.FundID !== fundId));
       setFundId('');
