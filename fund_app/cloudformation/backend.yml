@@ -41,7 +41,9 @@ Resources:
       Runtime: python3.11
       Environment:
         Variables:
-          TABLE_NAME: YourDynamoDBTableName
+          CLIENTS_TABLE_NAME: Clients         # Nombre de la tabla Clients
+          FUNDS_TABLE_NAME: Funds             # Nombre de la tabla Funds
+          TRANSACTIONS_TABLE_NAME: Transactions # Nombre de la tabla Transactions
 
   ApiGateway:
     Type: AWS::ApiGateway::RestApi
