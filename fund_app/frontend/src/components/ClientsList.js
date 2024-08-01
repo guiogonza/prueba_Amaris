@@ -5,14 +5,18 @@ import log from 'loglevel';
 
 log.setLevel('debug');
 
+<<<<<<< HEAD
 const API_URL = process.env.REACT_APP_API_URL; // Usar variable de entorno
 
+=======
+>>>>>>> a56f19c81f98fd71e638592bd7853bfbcaab880e
 const ClientsList = () => {
   const [clients, setClients] = useState([]);
   const [message, setMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
+<<<<<<< HEAD
     console.log('API_URL:', API_URL); // Imprimir el valor de API_URL para verificar
     const fetchClients = async () => {
       try {
@@ -24,15 +28,32 @@ const ClientsList = () => {
       } catch (error) {
         log.error('Error fetching clients:', error);
         console.error('Error fetching clients:', error); // Imprimir error en la consola
+=======
+    const fetchClients = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/clients');
+        log.debug('Clients data:', response.data); // Verifica la estructura de los datos aquí
+        setClients(response.data);
+      } catch (error) {
+        log.error('Error fetching clients:', error);
+>>>>>>> a56f19c81f98fd71e638592bd7853bfbcaab880e
       }
     };
 
     fetchClients();
+<<<<<<< HEAD
   }, []); // Remueve `API_URL` de las dependencias
 
   const deleteClient = async (clientId) => {
     try {
       await axios.delete(`${API_URL}/client/${clientId}`);
+=======
+  }, []);
+
+  const deleteClient = async (clientId) => {
+    try {
+      await axios.delete(`http://localhost:5000/client/${clientId}`);
+>>>>>>> a56f19c81f98fd71e638592bd7853bfbcaab880e
       setClients(clients.filter(client => client.ClienteId !== clientId));
       setMessage('Cliente eliminado con éxito.');
     } catch (error) {
