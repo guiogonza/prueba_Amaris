@@ -1,11 +1,14 @@
 AWSTemplateFormatVersion: '2010-09-09'
+Description: Frontend deployment with S3
 Resources:
-  ReactAppS3Bucket:
+  FrontendBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: react-app-bucket
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: error.html
 
-  ReactAppDeployment:
-    Type: AWS::CloudFormation::Stack
-    Properties:
-      TemplateURL: https://path-to-react-app-deployment.yaml
+Outputs:
+  WebsiteURL:
+    Description: "URL for the website"
+    Value: !GetAtt FrontendBucket.WebsiteURL
