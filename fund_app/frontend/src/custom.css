@@ -1,0 +1,57 @@
+body {
+    background-color: #f0f2f5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .header, .footer {
+    background-color: #343a40;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+  }
+  
+  .container-main {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    flex: 1;
+  }
+  
+  .menu-button {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+  }
+  
+  .offcanvas-body {
+    background-color: #f8f9fa;
+  }
+  
+  button.mb-2 {
+    margin-bottom: 10px;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+  }
+  
+  .header-title {
+    flex-grow: 1;
+    text-align: center;
+    color: white;
+    margin: 0;
+    padding-right: 40px;
+  }
+  
+  .footer {
+    margin-top: auto;
+  }

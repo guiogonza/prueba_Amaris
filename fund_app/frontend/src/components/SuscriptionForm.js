@@ -8,7 +8,6 @@ const SuscriptionForm = () => {
   const [amount, setAmount] = useState('');
   const [clients, setClients] = useState([]);
   const [funds, setFunds] = useState([]);
-  const [clientExists, setClientExists] = useState(true);
   const [message, setMessage] = useState('');
 
   useEffect(() => {
@@ -39,6 +38,10 @@ const SuscriptionForm = () => {
       const response = await axios.post('http://localhost:5000/subscribe', { client_id: clientId, fund_id: fundId, amount });
       alert(`Suscripción exitosa: ${response.data.transaction_id}`);
       setMessage('');
+
+      // Enviar notificación de suscripción
+      await sendSubscriptionNotification(clientId, fundId, amount);
+
       // Limpiar los campos del formulario
       setClientId('');
       setFundId('');
@@ -46,16 +49,22 @@ const SuscriptionForm = () => {
     } catch (error) {
       if (error.response.status === 400) {
         setMessage(error.response.data.message);
-        setClientExists(false);
       } else {
         alert(error.response.data.message);
       }
     }
   };
 
+  const sendSubscriptionNotification = async (clientId, fundId, amount) => {
+    try {
+      await axios.post('http://localhost:5000/notify_subscription', { client_id: clientId, fund_id: fundId, amount });
+    } catch (error) {
+      console.error('Error sending notification:', error);
+    }
+  };
+
   const handleAmountChange = (e) => {
     const value = e.target.value;
-    // Solo permitir números
     if (/^\d*$/.test(value)) {
       setAmount(value);
     }
