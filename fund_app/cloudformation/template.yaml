@@ -1,0 +1,41 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  FundManagementDynamoDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Funds
+      AttributeDefinitions:
+        - AttributeName: TransactionID
+          AttributeType: S
+        - AttributeName: UserID
+          AttributeType: S
+        - AttributeName: FundID
+          AttributeType: S
+      KeySchema:
+        - AttributeName: TransactionID
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      GlobalSecondaryIndexes:
+        - IndexName: UserID-FundID-index
+          KeySchema:
+            - AttributeName: UserID
+              KeyType: HASH
+            - AttributeName: FundID
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+          ProvisionedThroughput:
+            ReadCapacityUnits: 5
+            WriteCapacityUnits: 5
+
+  BackendStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://path-to-backend-stack.yaml
+
+  FrontendStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://path-to-frontend-stack.yaml
