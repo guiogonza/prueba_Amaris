@@ -1,2 +1,25 @@
-node_modules
-.env
+# Ignorar el archivo .env del backend
+backend/.env
+
+# Ignorar el archivo .env del frontend
+frontend/.env
+
+# Otras configuraciones comunes para evitar archivos no deseados en el repositorio
+*.pyc
+__pycache__/
+*.log
+*.sqlite3
+
+# Ignorar directorios de caché
+.cache/
+node_modules/
+dist/
+build/
+
+# Ignorar archivos de configuración del IDE
+.vscode/
+.idea/
+
+# Ignorar archivos generados por el sistema
+.DS_Store
+Thumbs.db
