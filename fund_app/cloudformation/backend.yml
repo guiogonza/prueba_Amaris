@@ -1,0 +1,19 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  FlaskAppEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-0c55b159cbfafe1f0
+      InstanceType: t2.micro
+      KeyName: my-key-pair
+      SecurityGroups:
+        - default
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash
+          yum update -y
+          yum install -y python3 git
+          pip3 install flask boto3
+          git clone https://github.com/my-repo/fund_app.git
+          cd fund_app/backend
+          python3 app.py

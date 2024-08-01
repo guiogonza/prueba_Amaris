@@ -1,0 +1,11 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  ReactAppS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: react-app-bucket
+
+  ReactAppDeployment:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://path-to-react-app-deployment.yaml
